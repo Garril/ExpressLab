@@ -19,7 +19,4 @@ const Class = sequelize.define("Class", {
   paranoid: true
 });
 
-// 外键联系
-Class.hasMany(Student);
-
 module.exports = Class;

@@ -18,6 +18,10 @@ files.forEach(file => {
   }
 });
 
+// 导入模型关系
+require('./relation');
+
+
 // 同步所有模型到数据库
 sequelize
   .sync({

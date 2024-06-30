@@ -12,7 +12,7 @@ const secret = require("./secret");
 const sequelize = new Sequelize(secret.dbname, secret.name, secret.pw, {
   host: "localhost",
   dialect: "mysql",
-  logging: null // 关闭sql操作记录
+  // logging: null // 关闭sql操作记录
 });
 
 // (async function () {

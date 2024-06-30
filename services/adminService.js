@@ -17,7 +17,10 @@ exports.addAdmin = async function (adminObj, operatorId) {
 
 
 /* adminService.deleteAdmin('1'); */
-exports.deleteAdmin = async function (adminId) {
+exports.deleteAdmin = async function (adminId, operatorId) {
+  // 操作权限
+  if (operatorId) { }
+
   // const ins = await Admin.findByPk(adminId);
   // await ins?.destroy();
 
@@ -42,7 +45,10 @@ exports.deleteAdmin = async function (adminId) {
     console.log(r);
   })  
 */
-exports.updateAdmin = async function (adminId, adminObj) {
+exports.updateAdmin = async function (adminId, adminObj, operatorId) {
+  // 操作权限
+  if (operatorId) { }
+
   // const ins = await Admin.findByPk(adminId);
   // ins.loginId = adminObj.loginId;
   // ins.save();

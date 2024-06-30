@@ -18,6 +18,10 @@ module.exports = sequelize.define("Student", {
   mobile: {
     type: DataTypes.STRING(11),
     allowNull: false
+  },
+  location: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   createdAt: false,
