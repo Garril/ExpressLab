@@ -17,3 +17,15 @@ cheerio(Jquery 核心库，与 dom 无关，字符串分析 html 片段中有什
 axios
 
 `npm i axios cheerio`
+
+## 加密 md5
+
+（单向加密，可加密，不可解密）hash 加密算法的一种，可以将任何一个字符串，加密成一个固定长度的字符串。
+
+同样数据加密后，得到结果一致。
+
+`npm i md5`
+
+## 统一时间 moment
+
+`npm i moment`

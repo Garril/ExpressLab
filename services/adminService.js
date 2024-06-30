@@ -1,6 +1,7 @@
 // 管理员初始化
 // 若数据库无管理员，需要自动添加一个默认管理员
 
+const md5 = require('md5');
 const Admin = require('../models/entity/Admin');
 
 /* adminService.addAdmin({
@@ -11,6 +12,7 @@ exports.addAdmin = async function (adminObj, operatorId) {
   // 操作权限
   if (operatorId) { }
   // 判断新用户的信息是否合理
+  adminObj.loginPwd = md5(adminObj.loginPwd);
   const ins = await Admin.create(adminObj);
   return ins.toJSON();
 }
@@ -64,14 +66,22 @@ exports.updateAdmin = async function (adminId, adminObj, operatorId) {
 
 // 登录
 exports.login = async function (loginId, loginPwd) {
+  const formatPwd = md5(loginPwd);
   const res = await Admin.findOne({
     where: {
       loginId,
-      loginPwd
-    }
+      loginPwd: formatPwd
+    },
+    attributes: ['id', 'loginId', 'loginPwd'],
+    raw: true // 返回js对象，而不是sequelize实例
+    // logging: console.log
   })
-  if (res && res.loginId === loginId && res.loginPwd === loginPwd) {
-    return res.toJSON();
+  if (res && res.loginId === loginId && res.loginPwd === formatPwd) {
+    return {
+      id: res.id,
+      loginId: res.loginId,
+    };
+    // return res.toJSON();
   }
   return null;
 }
