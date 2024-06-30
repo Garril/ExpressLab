@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Student = require('../models/entity/Student');
 
 exports.addStudent = async function (stuArr, operatorId) {
@@ -32,3 +33,35 @@ exports.updateStudent = async function (id, stuObj, operatorId) {
   return res;
 }
 
+// 获取所有学生
+exports.getStudents = async function (page = 1, limit = 10, sex = -1, name = '') {
+  // const res = await Student.findAll({
+  //   offset: (page - 1) * limit,
+  //   limit: +limit
+  // });
+  // const total = await Student.count()
+  // const data = JSON.stringify(res);
+
+  // return {
+  //   total, data
+  // };
+  const condition = {};
+  if (sex !== -1) {
+    condition.sex = !!sex;
+  }
+  if (name) {
+    condition.name = {
+      [Op.like]: `%${name}%`
+    };
+  }
+  const res = await Student.findAndCountAll({
+    where: condition,
+    offset: (page - 1) * limit,
+    limit: +limit,
+    attributes: ["id", "name", "birthday"] // 需要的属性
+  })
+  return {
+    total: res.count,
+    data: JSON.parse(JSON.stringify(res.rows))
+  };
+}

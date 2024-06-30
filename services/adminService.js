@@ -62,3 +62,27 @@ exports.updateAdmin = async function (adminId, adminObj, operatorId) {
   return res;
 }
 
+// 登录
+exports.login = async function (loginId, loginPwd) {
+  const res = await Admin.findOne({
+    where: {
+      loginId,
+      loginPwd
+    }
+  })
+  if (res && res.loginId === loginId && res.loginPwd === loginPwd) {
+    return res.toJSON();
+  }
+  return null;
+}
+
+// 获取用户信息
+exports.getAdminById = async function (id) {
+  const res = await Admin.findByPk(id);
+  if (res) {
+    return res.toJSON();
+  }
+  return null;
+}
+
+
