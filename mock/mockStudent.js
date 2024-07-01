@@ -1,4 +1,6 @@
 const Mock = require("mockjs");
+require('../services/init');
+
 
 const res = Mock.mock({
   "data|50-100": [

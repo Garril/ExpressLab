@@ -12,7 +12,8 @@
     "mockjs": "^1.1.0",
     "moment": "^2.30.1",
     "mysql2": "^3.10.1",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "validate.js": "^0.13.1"
   },
   "config": {
     "commitizen": {
