@@ -176,7 +176,7 @@ exports.getStudents = async function (
     where: condition,
     offset: (page - 1) * limit,
     limit: +limit,
-    attributes: ["id", "name", "birthday"], // 需要的属性
+    attributes: ["id", "name", "birthday", "sex", "age"], // 需要的属性
   });
   return {
     total: res.count,

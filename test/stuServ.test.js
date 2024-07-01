@@ -31,3 +31,10 @@ stuServ
   .then((res) => {
     console.log("res: ", res);
   });
+
+
+
+
+stuServ.getStudents().then(res => {
+  console.log(res);
+})
