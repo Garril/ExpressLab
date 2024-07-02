@@ -5,19 +5,19 @@ const moment = require("moment");
 const Student = require("../models/entity/Student");
 const Class = require("../models/entity/Class");
 
-const { pick } = require('../utils/propertyHelp');
+const { pick } = require("../utils/propertyHelp");
 
 exports.addStudent = async function (stuInfo, operatorId) {
   // 需要显示的属性
-  const filterAttrs = ['name', 'birthday', 'sex', 'mobile', 'ClassId'];
+  const filterAttrs = ["name", "birthday", "sex", "mobile", "ClassId"];
   let stuArr = stuInfo;
   // 判断是否为 数组
   if (stuInfo && !Array.isArray(stuInfo)) {
     stuArr = [pick(stuInfo, ...filterAttrs)];
   } else {
-    stuArr = stuInfo.map(item => {
-      return pick(item, ...filterAttrs)
-    })
+    stuArr = stuInfo.map((item) => {
+      return pick(item, ...filterAttrs);
+    });
   }
   // 操作权限
   if (operatorId) {
@@ -102,18 +102,18 @@ exports.addStudent = async function (stuInfo, operatorId) {
       }
     });
 
+    // 处理错误日志
+    if (failResArr.length > 0) {
+      console.log("All validations failed:", failResArr);
+      // 记录错误日志...
+    }
+
     // 处理成功的结果
     if (succResArr.length > 0) {
       console.log("All successful validations:", succResArr);
       // 数据库操作
       const ins = await Student.bulkCreate(succResArr);
       return ins;
-    }
-
-    // 处理错误日志
-    if (failResArr.length > 0) {
-      console.log("All validations failed:", failResArr);
-      // 记录错误日志...
     }
   } catch (err) {
     console.error("Unexpected error:", err);
@@ -124,6 +124,7 @@ exports.deleteStudent = async function (id, operatorId) {
   // 操作权限
   if (operatorId) {
   }
+  // 考虑是否已经被删除？...
 
   const res = Student.destroy({
     where: {
@@ -165,7 +166,8 @@ exports.getStudents = async function (
   // };
   const condition = {};
   if (sex !== -1) {
-    condition.sex = !!sex;
+    // 字符串0，1两次!!后都为true，需先转为number
+    condition.sex = !!parseInt(sex);
   }
   if (name) {
     condition.name = {
@@ -182,4 +184,16 @@ exports.getStudents = async function (
     total: res.count,
     data: JSON.parse(JSON.stringify(res.rows)),
   };
+};
+
+// 获取单个学生
+exports.getStudentById = async function (id) {
+  if (!id) {
+    return null;
+  }
+  const res = await Student.findByPk(id);
+  if (res) {
+    return res.toJSON();
+  }
+  return null;
 };
