@@ -33,6 +33,14 @@ axios
 这里使用 validate.js，验证某个对象的属性是否满足某些规则
 `npm i validate.js`
 
+## 日志记录
+
+库: log4js
+日志级别：调试日志、错误日志、信息日志等，输出范围从大到小，依次为：`（all、trace、debug、info、warn、error、fatal、mark、off）`
+可能不同等级，会输出到不同的出口中。
+
+`npm i log4js`
+
 ## 统一时间 moment
 
 `npm i moment`

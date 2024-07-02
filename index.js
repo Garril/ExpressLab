@@ -4,9 +4,5 @@ require("./models/sync");
 // 验证库 配置
 require("./services/init");
 
-const moment = require("moment");
-
-const stuServ = require("./services/studentService");
-stuServ.getStudents().then(res => {
-  console.log(res);
-})
+// 日志
+// const { sqlLogger, logger } = require('./logger')

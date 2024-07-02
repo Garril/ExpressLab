@@ -9,10 +9,16 @@ const { Sequelize } = require("sequelize");
 */
 const secret = require("./secret");
 
+// 日志配置
+const { sqlLogger } = require('../logger');
+
 const sequelize = new Sequelize(secret.dbname, secret.name, secret.pw, {
   host: "localhost",
   dialect: "mysql",
-  logging: null // 关闭sql操作记录
+  // logging: null // 关闭sql操作记录
+  logging: (msg) => {
+    sqlLogger.debug(msg);
+  }
 });
 
 // (async function () {
