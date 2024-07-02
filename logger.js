@@ -9,7 +9,8 @@ log4js.configure({
       filename: path.resolve(__dirname, "logs", "sql", "logging.log"),
       maxLogSize: 1024 * 1024, // 最大字节数,配置：1MB
       keepFileExt: true, // 保留文件后缀
-      daysToKeep: 3, // 保留3天的备份日志
+      // daysToKeep: 3, // 保留3天的备份日志(弃了，改用numBackups )
+      numBackups: 3,
       layout: {
         type: 'pattern',
         pattern: '[%d{yyyy-MM-dd hh:mm:ss}] [level: %p] [sort: %c] -- content: %n%m%n'

@@ -41,6 +41,14 @@ axios
 
 `npm i log4js`
 
+## nodemon
+
+nodemon 是一个监视器，用于监控工程中文件变化，如果发现文件变化，执行一段脚本
+
+可以添加配置文件`nodemon.json`，配置要监听什么文件，不会让`package.json`变化也要重启服务器
+
+`npm i -D nodemon`
+
 ## 统一时间 moment
 
 `npm i moment`
@@ -74,3 +82,13 @@ m.local().fromNow();
 // 转化描述为中文
 moment.locale("zh-cn");
 ```
+
+## 中间件
+
+需要手动交由后续中间件处理
+若后续没了中间件，express 会响应 404
+
+中间件发生错误时，不会自动停止服务器，相当于`next(new Error("err msg"))`,且响应 500
+
+中间件参数`err,req,res,next`
+

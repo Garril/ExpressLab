@@ -2,7 +2,9 @@
   "repository": "git@github.com:Garril/ExpressLab.git",
   "author": "Garril <CoderGarril@outlook.com>",
   "scripts": {
-    "commit": "npx cz"
+    "commit": "npx cz",
+    "start": "nodemon -x npm run server",
+    "server": "node index"
   },
   "dependencies": {
     "axios": "^1.7.2",
@@ -86,5 +88,8 @@
         }
       }
     }
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
