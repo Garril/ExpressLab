@@ -22,6 +22,7 @@ app.use(express.json());
 
 // 处理 api 的请求
 app.use("/api/student", require("./api/student"));
+app.use("/api/admin", require("./api/admin"));
 
 
 /* 
