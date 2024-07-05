@@ -1,0 +1,1 @@
+exports.secretCode = 'iamsecret';

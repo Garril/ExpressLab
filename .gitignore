@@ -1,5 +1,7 @@
 **\node_modules
-**\secret.js
+
+# 正式环境需要开启
+# **\secret.js
 
 logs/*
 !logs/.gitkeep

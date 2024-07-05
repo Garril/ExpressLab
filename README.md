@@ -103,3 +103,13 @@ cookie-parser
 用 /api/student/1771 通过
 用 /api/student/1771/222 不通过
 `npm i path-to-regexp`
+
+```js
+const { secretCode } = require('./secret.js');
+app.use(cookieParser(secretCode));
+
+然后 在 routes/api/admin.js中
+通过res.cookie中配置参数signed为true
+自动对 cookie中token进行加密
+但是需要考虑非web端，响应头中authorization的设置，也需要加密，所以不推荐，这里直接自己根据密钥进行加密，然后两边一块设置。
+```

@@ -4,6 +4,8 @@
 const adminServ = require("../../services/adminService");
 const asyncHandler = require("../asyncHandler");
 
+const cryptoJS = require('../../utils/crypto');
+
 // 测试: 帐号：admin、密码：123456
 // router.post(
 //   "/login",
@@ -36,15 +38,17 @@ module.exports = {
       handler: asyncHandler(async (req, res) => {
         const result = await adminServ.login(req.body.loginId, req.body.loginPwd);
         if (result) {
+          let cipherText = cryptoJS.encrypt(result.id);
           // 1小时后过期
           // res.header("set-cookie", `token=${result.id};path=/;domain=localhost;max-age=3600;`);
-          res.cookie("token", result.id, {
+          res.cookie("token", cipherText, {
             path: '/',
             domain: 'localhost',
             maxAge: 7 * 24 * 3600 * 1000,  // 7天后过期
             // httpOnly: true
+            // signed: true, // 根据密钥加密（但是需要考虑authorization，不推荐）
           });
-          res.header('authorization', result.id);
+          res.header('authorization', cipherText);
         }
         return result;
       }),

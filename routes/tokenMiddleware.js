@@ -1,6 +1,7 @@
 const { pathToRegexp } = require('path-to-regexp');
 
 const buildResponse = require("./buildResponse");
+const cryptoJS = require('../utils/crypto');
 
 // 批量获取api配置信息时获取
 // const needTokenApi = [
@@ -29,8 +30,10 @@ module.exports = function (needTokenApi) {
       next();
       return;
     }
+    // 如果是使用自动加密，req.cookies获取不到加密后的cookie，需要signedCookies
+    // let token = req.signedCookies.token;
+    let token = req.cookies.token; // 这里自己加密解密
 
-    let token = req.cookies.token;
     if (!token) {
       // 从header的authorization中获取（移动端等其他设备需要）
       token = req.headers.authorization;
@@ -40,9 +43,12 @@ module.exports = function (needTokenApi) {
       handleNoToken(req, res, next);
       return;
     }
-    console.log("token: ", token);
-    console.log("cookie: ", req.cookies);
+    // console.log("token: ", token);
+    // console.log("cookie: ", req.cookies);
+
     // 验证token...
+    const userId = cryptoJS.decrypt(token);
+    req.userId = userId;
 
     next();
   }

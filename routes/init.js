@@ -19,6 +19,9 @@ const { routesMap, needTokenApi } = getApiCfgs(fs, path);
 // req对象中注入cookies属性，获取所有请求传递过来的cookie
 // res对象中注入cookie方法设置cookie
 const cookieParser = require("cookie-parser");
+
+// const { secretCode } = require('./secret.js');
+// app.use(cookieParser(secretCode));
 app.use(cookieParser());
 
 // 应用token中间件
