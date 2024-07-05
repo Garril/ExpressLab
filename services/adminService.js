@@ -67,7 +67,6 @@ exports.updateAdmin = async function (adminId, adminObj, operatorId) {
 // 登录
 exports.login = async function (loginId, loginPwd) {
   const formatPwd = md5(loginPwd);
-  console.log(formatPwd);
   const res = await Admin.findOne({
     where: {
       loginId,

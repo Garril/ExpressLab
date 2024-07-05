@@ -92,3 +92,14 @@ moment.locale("zh-cn");
 
 中间件参数`err,req,res,next`
 
+## 登录认证
+
+cookie-parser
+
+`npm i cookie-parser`
+
+解析匹配：
+/api/student/:id
+用 /api/student/1771 通过
+用 /api/student/1771/222 不通过
+`npm i path-to-regexp`
