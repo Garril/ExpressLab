@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const app = express(); // app本质：一个处理请求的函数
+const cors = require("cors");
 
 const fs = require('fs');
 const path = require("path");
@@ -10,16 +11,32 @@ const staticRoot = path.join(__dirname, "../public");
 // 不存在文件：移交流程给后续中间件
 app.use(express.static(staticRoot));
 
+// CORS
+// （自己实现）
+// app.use(require('./corsMiddleware'));
+// cors库
+const whiteList = ["http://127.0.0.1:8000", "null"]
+app.use(cors({
+  origin(origin, callback) {
+    if (whiteList.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error("not allowed"))
+    }
+  },
+  credentials: true
+}));
+
 // 批量读取api文件夹下的配置文件，获取配置数组
 const getApiCfgs = require("./getApiCfgs.js");
 const { routesMap, needTokenApi } = getApiCfgs(fs, path);
 // console.log(routesMap, needTokenApi);
 
+
 // cookie-parser
 // req对象中注入cookies属性，获取所有请求传递过来的cookie
 // res对象中注入cookie方法设置cookie
 const cookieParser = require("cookie-parser");
-
 // const { secretCode } = require('./secret.js');
 // app.use(cookieParser(secretCode));
 app.use(cookieParser());
@@ -69,6 +86,7 @@ app.use('/', router);
 app.use(require("./errorMiddleware"));
 
 app.listen(8888, () => {
+  // 启动需加上nodemon才读取得到 NODE_ENV
   console.log("environment: ", process.env.NODE_ENV);
   console.log("server listening on 8888");
 });

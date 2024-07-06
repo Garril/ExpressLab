@@ -105,11 +105,36 @@ cookie-parser
 `npm i path-to-regexp`
 
 ```js
-const { secretCode } = require('./secret.js');
+const { secretCode } = require("./secret.js");
 app.use(cookieParser(secretCode));
+```
 
-然后 在 routes/api/admin.js中
-通过res.cookie中配置参数signed为true
-自动对 cookie中token进行加密
-但是需要考虑非web端，响应头中authorization的设置，也需要加密，所以不推荐，这里直接自己根据密钥进行加密，然后两边一块设置。
+然后 在 routes/api/admin.js 中
+通过 res.cookie 中配置参数 signed 为 true
+自动对 cookie 中 token 进行加密(req.signedCookies.token 获取)
+但是需要考虑非 web 端，响应头中 authorization 的设置，也需要加密，所以不推荐，这里直接自己根据密钥进行加密，然后两边一块设置。(req.cookies.token 获取)
+
+## 跨域
+
+`npm i cors`
+cors 默认下不允许带 cookie。
+如果是 fetch，注意是否有设置 credentials:true --- 一直带 cookie
+
+```js
+// 针对某些接口进行跨域设置
+const cors = require("cors");
+app.get("/login/:id", cors(), function (req, res, next) {
+  // ....
+});
+
+app.post(
+  "/student/:id",
+  cors({
+    origin: "http://example.com",
+    optionsSuccessStatus: 200,
+  }),
+  function (req, res, next) {
+    // ....
+  }
+);
 ```
