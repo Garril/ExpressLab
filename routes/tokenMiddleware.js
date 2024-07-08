@@ -2,6 +2,7 @@ const { pathToRegexp } = require('path-to-regexp');
 
 const buildResponse = require("./buildResponse");
 const cryptoJS = require('../utils/crypto');
+const { verifyJWT } = require('./jwt');
 
 // 批量获取api配置信息时获取
 // const needTokenApi = [
@@ -32,7 +33,7 @@ module.exports = function (needTokenApi) {
     }
     // 如果是使用自动加密，req.cookies获取不到加密后的cookie，需要signedCookies
     // let token = req.signedCookies.token;
-    let token = req.cookies.token; // 这里自己加密解密
+    let token = req.cookies.token; // 这里的token是自定，需要自己加密解密
 
     if (!token) {
       // 从header的authorization中获取（移动端等其他设备需要）
@@ -47,9 +48,28 @@ module.exports = function (needTokenApi) {
     // console.log("cookie: ", req.cookies);
 
     // 验证token...
-    const userId = cryptoJS.decrypt(token);
-    req.userId = userId;
+    // 一、没用JWT时
+    // const userId = cryptoJS.decrypt(token);
+    // req.userId = userId;
 
+    // 二、使用JWT，多一层加密
+    const cryptoContent = verifyJWT(req);
+    if (cryptoContent) {
+      const userId = cryptoJS.decrypt(cryptoContent.id);
+      req.userId = userId;
+    } else {
+      handleNoToken(req, res, next);
+      return;
+    }
+    /* 
+      如果用的session
+      直接验证 req.session，服务器重启 session清空
+      if(req.session.userInfo) {
+        next();
+      } else {
+        handleNoToken(req, res, next);
+      }
+    */
     next();
   }
 };

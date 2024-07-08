@@ -114,10 +114,28 @@ app.use(cookieParser(secretCode));
 自动对 cookie 中 token 进行加密(req.signedCookies.token 获取)
 但是需要考虑非 web 端，响应头中 authorization 的设置，也需要加密，所以不推荐，这里直接自己根据密钥进行加密，然后两边一块设置。(req.cookies.token 获取)
 
+## cookie
+
+存在客户端，不占用服务器资源，但是：只能是字符串格式，存储量有限，一般 4KB，数据容易被获取，被篡改，容易丢失
+
+存储量如果用 sessionStorage、localStorage，就不会自动发送，且没有 cookie 的一些安全性限制（比如 httponly 的设置，js 不可读，secure 只随 https 发送）
+
+获取和篡改可以通过 httponly 和加密解决，但是丢失（清除缓存）
+
+## session
+
+sessionID（uuid）
+
+存在服务器端，可以是任何格式，数组对象日期等，存储量理论上无限，数据难以被获取，难以被篡改
+
+占用服务器资源
+
+`npm i express-session`
+
 ## 跨域
 
 `npm i cors`
-cors 默认下不允许带 cookie。
+cors 库 默认下不允许带 cookie。
 如果是 fetch，注意是否有设置 credentials:true --- 一直带 cookie
 
 ```js
@@ -138,3 +156,50 @@ app.post(
   }
 );
 ```
+
+## jwt
+
+中心服务器，单点登录使用的一个身份令牌（只是一个令牌格式），可以存 cookie 也可以存 localstorage，随意
+
+无论什么样的终端设备，都可以用同样的规范，来进行处理，不需要考虑其他设备是不是有完善的 cookie 管理机制
+
+组成的三部分：
+header、payload、signature
+
+### header
+
+```js
+window.btoa(
+  JSON.stringify({
+    alg: "HS256",
+    typ: "JWT",
+  })
+);
+// RS256 非对称加密, HS256 对称加密
+```
+
+将对象 进行 base64 url 编码
+（base64 url 不是加密算法，是一种编码方式，在 base64 算法的基础上，对`+、=、/`等三个字符做特殊处理, btoa 函数可以完成这个操作。
+base64：用 64 个可打印字符来表示一个二进制数据）
+
+### payload
+
+jwt 主体信息，是一个 json 对象（部分系统，属性有自己的规范）
+json 对象，经过 btoa 加密后获取到 payload
+
+### signature
+
+jwt 的签名，保证 jwt 不被篡改。
+
+获取：首先将 header 和 payload 的 base64 url 编码拼接，获取到字符串 str1，然后根据 header 指定的算法和自定的密钥，对拼接后的字符串进行加密，获取到字符串 str2。
+（服务器解密需要密钥和算法，验证时重新加密对比即可）
+
+将 str1 和 str2 拼接，就是 jwt
+（拼接用.隔开）
+
+### jwt 库
+
+express-jwt 和 jsonwebtoken 二选一
+
+这里用 jsonwebtoken
+`npm i jsonwebtoken`

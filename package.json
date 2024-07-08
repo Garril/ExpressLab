@@ -13,6 +13,8 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
     "log4js": "^6.9.1",
     "md5": "^2.3.0",
     "mockjs": "^1.1.0",

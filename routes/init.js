@@ -1,7 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const app = express(); // app本质：一个处理请求的函数
-const cors = require("cors");
+
+
+/* 
+如果使用的是session方案
+  const session = require('express-session');
+  const { secretCode } = require('./secret.js');
+  app.use(session({
+    secret: secretCode,
+    name: 'sessionid',
+    resave: false,
+    saveUninitialized: true,
+  }))
+*/
+
+
 
 const fs = require('fs');
 const path = require("path");
@@ -15,10 +29,12 @@ app.use(express.static(staticRoot));
 // （自己实现）
 // app.use(require('./corsMiddleware'));
 // cors库
-const whiteList = ["http://127.0.0.1:8000", "null"]
+const cors = require("cors");
+const whiteList = ["http://127.0.0.1:8000", "http://127.0.0.1:8888", "null"]
 app.use(cors({
   origin(origin, callback) {
-    if (whiteList.includes(origin)) {
+    if (whiteList.includes(origin) || !origin) {
+      // 测试环境：浏览器和postman发送，origin均为undefined
       callback(null, origin);
     } else {
       callback(new Error("not allowed"))
@@ -35,7 +51,6 @@ const { routesMap, needTokenApi } = getApiCfgs(fs, path);
 
 // cookie-parser
 // req对象中注入cookies属性，获取所有请求传递过来的cookie
-// res对象中注入cookie方法设置cookie
 const cookieParser = require("cookie-parser");
 // const { secretCode } = require('./secret.js');
 // app.use(cookieParser(secretCode));

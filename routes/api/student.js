@@ -53,7 +53,7 @@ module.exports = {
   config: [
     {
       method: "GET",
-      needToken: false,
+      needToken: true,
       path: "/",
       handler: asyncHandler(async (req, res, next) => {
         const page = req.query.page || 1;

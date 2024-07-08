@@ -13,7 +13,11 @@ module.exports = sequelize.define("Student", {
     allowNull: false,
     get() {
       // 访问器：获取时间戳, 不能 this.birthday 循环引用
-      return this.getDataValue("birthday").getTime()
+      const birth = this.getDataValue("birthday"); // 可能为undefined
+      if (birth) {
+        return birth.getTime();
+      }
+      return undefined;
     }
   },
   age: {
