@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const app = express(); // app本质：一个处理请求的函数
 
+const history = require("connect-history-api-fallback")
+app.use(history());
 
 /* 
 如果使用的是session方案
@@ -30,9 +32,11 @@ app.use(express.static(staticRoot));
 // app.use(require('./corsMiddleware'));
 // cors库
 const cors = require("cors");
-const whiteList = ["http://127.0.0.1:8000", "http://127.0.0.1:8888", "null"]
+const whiteList = ["http://localhost:8000", "http://localhost:8888", "http://localhost:5173", "null"]
+// 坑：本地测试记得：origin写的127.0.0.1会自动转换为localhost
 app.use(cors({
   origin(origin, callback) {
+    // console.log(origin);
     if (whiteList.includes(origin) || !origin) {
       // 测试环境：浏览器和postman发送，origin均为undefined
       callback(null, origin);

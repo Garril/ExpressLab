@@ -88,7 +88,9 @@ exports.login = async function (loginId, loginPwd) {
 
 // 获取用户信息
 exports.getAdminById = async function (id) {
-  const res = await Admin.findByPk(id);
+  const res = await Admin.findByPk(id, {
+    attributes: ['id', 'loginId']
+  });
   if (res) {
     return res.toJSON();
   }

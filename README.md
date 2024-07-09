@@ -203,3 +203,17 @@ express-jwt 和 jsonwebtoken 二选一
 
 这里用 jsonwebtoken
 `npm i jsonwebtoken`
+
+## 打包后的刷新问题
+
+打包后默认为 `http://localhost:8888/`打开页面
+路由跳转到`http://localhost:8888/login`按 F5 刷新，not found
+服务器没有找到`http://localhost:8888/login`对应的 静态资源 / api
+
+服务器端：
+`npm i connect-history-api-fallback`
+
+```js
+const history = require("connect-history-api-fallback");
+app.use(history());
+```
