@@ -25,7 +25,6 @@ const routes = [
     component: File,
     beforeEnter: (to, from, next) => {
       const { login: loginStore } = useStore();
-      debugger;
       if (loginStore.data && loginStore.data.loginId) {
         next();
       } else {

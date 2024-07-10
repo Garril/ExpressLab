@@ -2,6 +2,7 @@
 
 # 正式环境需要开启
 # **\secret.js
+# public/upload
 
 logs/*
 !logs/.gitkeep

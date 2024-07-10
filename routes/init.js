@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const app = express(); // app本质：一个处理请求的函数
 
-const history = require("connect-history-api-fallback")
-app.use(history());
-
 /* 
 如果使用的是session方案
   const session = require('express-session');
@@ -18,14 +15,8 @@ app.use(history());
 */
 
 
-
 const fs = require('fs');
 const path = require("path");
-const staticRoot = path.join(__dirname, "../public");
-// 根据req.path找静态资源
-// 存在文件：直接返回，不移交后续操作
-// 不存在文件：移交流程给后续中间件
-app.use(express.static(staticRoot));
 
 // CORS
 // （自己实现）
@@ -84,10 +75,28 @@ for (const [baseURL, routes] of routesMap) {
   routes.forEach(item => {
     const method = item.method.toLowerCase();
     const url = baseURL + item.path;
-    router[method](url, item.handler);
+    if (Array.isArray(item.handler)) {
+      router[method](url, ...item.handler);
+    } else {
+      router[method](url, item.handler);
+    }
   })
 }
 app.use('/', router);
+
+// 通过 rewrites 选项来确保所有以 /api 开头的请求不会被 connect-history-api-fallback 处理
+const history = require("connect-history-api-fallback")
+app.use(history({
+  rewrites: [
+    { from: /^\/api\/.*$/, to: context => context.parsedUrl.path }
+  ]
+}));
+
+const staticRoot = path.join(__dirname, "../public");
+// 根据req.path找静态资源
+// 存在文件：直接返回，不移交后续操作
+// 不存在文件：移交流程给后续中间件
+app.use(express.static(staticRoot));
 
 /* 
   app.get(
@@ -102,7 +111,7 @@ app.use('/', router);
   ); 
 */
 // 错误处理
-app.use(require("./errorMiddleware"));
+// app.use(require("./errorMiddleware"));
 
 app.listen(8888, () => {
   // 启动需加上nodemon才读取得到 NODE_ENV

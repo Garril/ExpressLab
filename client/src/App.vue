@@ -11,11 +11,15 @@ const loginOut = () => {
   loginStore.loginOut();
 };
 
+import { useRouter } from "vue-router";
+const router = useRouter();
+
 onMounted(() => {
   const token = localStorage.getItem("token");
   if (token) {
     getUserInfo().then((res) => {
       userInfo.value.loginId = res.data.loginId;
+      router.push({ name: "Main", query: { msg: "Auto Login" } });
     });
   }
 });

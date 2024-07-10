@@ -9,7 +9,7 @@ function delay(duration) {
 }
 
 export async function loginIn(loginId, loginPwd) {
-  await delay(1500);
+  await delay(800);
   const res = await request().post("/api/admin/login", {
     loginId,
     loginPwd,
@@ -23,7 +23,7 @@ export function loginOut() {
 }
 
 export async function getUserInfo() {
-  await delay(1500);
+  await delay(800);
   const res = await request().get("/api/admin/whoami");
   return res.data;
 }

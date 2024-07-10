@@ -217,3 +217,7 @@ express-jwt 和 jsonwebtoken 二选一
 const history = require("connect-history-api-fallback");
 app.use(history());
 ```
+
+
+## 处理 multipart/form-data
+`npm i --save multer`
