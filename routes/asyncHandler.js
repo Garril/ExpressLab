@@ -6,7 +6,7 @@ module.exports = function asyncHandler(handler) {
       const result = await handler(req, res, next);
       res.send(buildResponse('200', result, ''));
     } catch (err) {
-      console.log("err: ", err);
+      console.log("asyncHandler err: ", err);
       next(err);
     }
   }

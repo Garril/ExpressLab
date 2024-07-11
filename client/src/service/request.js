@@ -21,7 +21,7 @@ export default function () {
     }
     return res;
   }, err => {
-    console.log("err: ", err);
+    console.log("request err: ", err);
     if (err.response.status === 403) {
       // 3、响应的消息码 403，表示token失效（需要本地删除token）或者没有token
       localStorage.removeItem('token');
