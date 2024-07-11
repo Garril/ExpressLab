@@ -1,4 +1,3 @@
-const stuServ = require("../../services/studentService");
 const asyncHandler = require("../asyncHandler");
 
 const path = require("path");

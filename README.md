@@ -218,6 +218,32 @@ const history = require("connect-history-api-fallback");
 app.use(history());
 ```
 
-
 ## 处理 multipart/form-data
+
 `npm i --save multer`
+
+## 迅雷下载
+
+假设下载地址为：---
+完整的下载地址为：
+1、AA---ZZ
+2、将 1 获取的字符串进行 base64 编码
+3、thunder:// + 2 获取的字符串
+
+a 超链接做个特殊标志
+
+```html
+<a resrole="thunder" href="#">下载</a>
+```
+
+```js
+function getThunderLink(href = "http://localhost:8888/api/download/robot.jpg") {
+  let thunderLink = `AA${href}ZZ`;
+  thunderLink = btoa(thunderLink);
+  return "thunder://" + thunderLink;
+}
+```
+
+断点续传：迅雷和浏览器，下载都是一段一段的，可以打断点看看，在 req 中有个 range 属性，表示某段的范围
+
+某些工具支持一开始发送一个 HEAD 请求，确定文件信息，多大，支不支持断点续传
