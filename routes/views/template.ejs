@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <h2>学生信息列表</h2>
+  <div>总数：<%= total %>
+  </div>
+
+  <ul>
+    <% data.forEach(stu=> { %>
+      <li>
+        <%= stu.name %>
+      </li>
+      <% }) %>
+  </ul>
+
+  <div>
+    <span>当前页码:<%= page %></span>
+    <span>每页<%= limit %>条数据</span>
+  </div>
+  <div>
+    <% if (+page> 1) { %>
+      <a href="?page=<%= +page - 1 %>">上一页</a>
+      <% } %>
+
+        <% if (page <Math.ceil(total / limit)) { %>
+          <a href="?page=<%= +page + 1 %>">下一页</a>
+          <% } %>
+  </div>
+</body>
+
+</html>

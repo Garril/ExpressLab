@@ -274,3 +274,14 @@ node 一般作为中间服务器。而不是直接后端服务器
 `npm i http-proxy-middleware`
 
 手写看 proxyMiddleware.js
+
+## 模板引擎
+
+ejs
+`npm i ejs`
+
+服务端渲染，具体实现看/routes/api/template.js
+以及 routes/views/templates.ejs
+爬虫可以之间看到页面源代码，利于 seo
+
+区别于 vue、react 的客户端渲染

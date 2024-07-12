@@ -78,6 +78,9 @@ app.use(express.json());
 // app.use("/api/student", require("./api/student"));
 // app.use("/api/admin", require("./api/admin"));
 
+// 模板引擎，设置模板路径
+app.set("views", path.resolve(__dirname, './views'));
+
 // 批量注册路由
 for (const [baseURL, routes] of routesMap) {
   routes.forEach(item => {
