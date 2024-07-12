@@ -13,7 +13,7 @@ const app = express(); // app本质：一个处理请求的函数
     saveUninitialized: true,
   }))
 */
-
+app.use(require('./antiHotlink'));
 
 const fs = require('fs');
 const path = require("path");

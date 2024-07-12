@@ -256,3 +256,7 @@ function getThunderLink(href = "http://localhost:8888/api/download/robot.jpg") {
 
 `npm i jimp`
 图片裁剪，翻转，颜色，合成，模糊合成等都可以用这个库
+
+## 图片防盗链
+
+防止白嫖：其他的网址直接拿的这边服务器的图片地址，用着服务器的带宽。
