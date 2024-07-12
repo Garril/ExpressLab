@@ -13,7 +13,6 @@ const app = express(); // app本质：一个处理请求的函数
     saveUninitialized: true,
   }))
 */
-app.use(require('./antiHotlink'));
 
 const fs = require('fs');
 const path = require("path");
@@ -38,6 +37,14 @@ app.use(cors({
   credentials: true
 }));
 
+// 防盗链
+app.use(require('./antiHotlink'));
+// 代理
+const { handProxyMiddleware, httpProxyMiddleware } = require('./proxyMiddleware');
+// app.use(handProxyMiddleware);
+app.use('/proxy', httpProxyMiddleware);
+
+
 // 批量读取api文件夹下的配置文件，获取配置数组
 const getApiCfgs = require("./getApiCfgs.js");
 const { routesMap, needTokenApi } = getApiCfgs(fs, path);
@@ -54,6 +61,7 @@ app.use(cookieParser());
 // 应用token中间件
 const tokenVerifyMidWare = require("./tokenMiddleware.js")(needTokenApi);
 app.use(tokenVerifyMidWare);
+
 
 // 请求头Content-type为application/x-www-form-urlencoded时
 // 解析消息体，将流数据读出，放到body中
@@ -112,6 +120,8 @@ app.use(express.static(staticRoot));
 */
 // 错误处理
 // app.use(require("./errorMiddleware"));
+
+
 
 app.listen(8888, () => {
   // 启动需加上nodemon才读取得到 NODE_ENV

@@ -260,3 +260,17 @@ function getThunderLink(href = "http://localhost:8888/api/download/robot.jpg") {
 ## 图片防盗链
 
 防止白嫖：其他的网址直接拿的这边服务器的图片地址，用着服务器的带宽。
+
+## 代理
+
+node 一般作为中间服务器。而不是直接后端服务器
+搭载静态资源 或者 非业务数据库
+
+这里需要将客户端的请求，转发给后端服务器
+然后接收后端服务器响应，把响应转发给客户端
+
+### http-proxy-middleware
+
+`npm i http-proxy-middleware`
+
+手写看 proxyMiddleware.js
