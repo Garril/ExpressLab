@@ -14,6 +14,14 @@ const app = express(); // app本质：一个处理请求的函数
   }))
 */
 
+// 验证码功能实现：加上session，把验证码文本放session中
+const { secretCode } = require('./secret.js');
+app.use(require('express-session')({
+  secret: secretCode,
+  resave: false,
+  saveUninitialized: true,
+}))
+
 const fs = require('fs');
 const path = require("path");
 
@@ -23,7 +31,9 @@ const path = require("path");
 // cors库
 const cors = require("cors");
 const whiteList = ["http://localhost:8000", "http://localhost:8888", "http://localhost:5173", "null"]
-// 坑：本地测试记得：origin写的127.0.0.1会自动转换为localhost
+// 坑：
+// 1、本地测试记得：发送请求origin写的127.0.0.1，这里会自动转换为localhost
+// 2、localhost和127.0.0.1这里不匹配
 app.use(cors({
   origin(origin, callback) {
     // console.log(origin);
@@ -96,7 +106,7 @@ for (const [baseURL, routes] of routesMap) {
 app.use('/', router);
 
 // 通过 rewrites 选项来确保所有以 /api 开头的请求不会被 connect-history-api-fallback 处理
-const history = require("connect-history-api-fallback")
+const history = require("connect-history-api-fallback");
 app.use(history({
   rewrites: [
     { from: /^\/api\/.*$/, to: context => context.parsedUrl.path }
