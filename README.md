@@ -327,3 +327,42 @@ ejs
 服务端接收到/captcha 请求，保存答案在 req.session.captcha 中，返回 svg 图片二进制数据。
 客户端显示验证码输入框和 svg 验证码，登录时，发送请求，请求体加上字段 “captcha”，保存用户输入的验证码
 服务端之后每次登陆，不管成功失败，都需要清空 req.session.captcha，正确提示错误的位置是“验证码”还是“帐号或密码”
+
+## 客户端缓存
+
+Cache-Control: no-cache 表示的是，可以缓存，但是要用到文件的时候，不要直接使用缓存，问一下服务器文件是否有所变动（看 ETag 是否变动）
+没有就 304 使用缓存的。
+如果更新 js、css，webpack 打包后 hash 变了，html 也变了，那么文件会更新的。
+
+## 富文本
+
+库：wangEditor
+`https://www.wangeditor.com/v5/installation.html`
+
+关于上传图片在富文本的两方案：
+1、用户上传，选择图片
+2、富文本框将图片信息送到服务器，服务器返回图片 url 路径
+3、服务端返回图片 url 路径，富文本生成 img 元素使用 url，插入富文本内部
+
+1、用户上传，选择图片
+2、在客户端生成图片 base64 格式
+3、富文本生成 img 元素使用 base64 作为图片路径，插入富文本内部
+
+## websocket
+
+实时通讯：
+一、轮询
+二、长连接
+长连接的断开，可能是由客户端/服务端发起的，keep-alive 会导致等待，所以可能是两边的任意一边出现问题，让另外一边干等着。
+
+三、websocket
+比 socket 多出：http 握手（第二步）
+1、客户端服务端 TCP/IP 三次握手建立连接
+2、客户端发送一个 http 格式的消息（特殊格式），服务器也响应一个 http 格式的消息（特殊格式）
+`（特殊格式：get请求，有头，没有请求体，多了个Connection: Upgrade 和 Upgrade: websocket）`
+3、全双工通信（但是 websocket 发送的消息有格式限制，socket 则无）
+4、任意一方主动断开，通道销毁
+
+### 库: socket.io
+`https://socket.io/zh-CN/docs/v4/`
+`npm i socket.io`

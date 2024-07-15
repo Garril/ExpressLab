@@ -117,7 +117,14 @@ const staticRoot = path.join(__dirname, "../public");
 // 根据req.path找静态资源
 // 存在文件：直接返回，不移交后续操作
 // 不存在文件：移交流程给后续中间件
-app.use(express.static(staticRoot));
+app.use(express.static(staticRoot, {
+  setHeaders(res, path) {
+    // html不太希望一直缓存，要请求最新的，其他文件缓存久一点
+    if (!path.endsWith(".html")) {
+      res.header('Cache-Control', `max-age=${3600 * 24 * 365}`) // 一年
+    }
+  },
+}));
 
 /* 
   app.get(
