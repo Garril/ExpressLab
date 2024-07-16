@@ -30,7 +30,8 @@
     "sequelize": "^6.37.3",
     "socket.io": "^4.7.5",
     "svg-captcha": "^1.4.0",
-    "validate.js": "^0.13.1"
+    "validate.js": "^0.13.1",
+    "xss": "^1.0.15"
   },
   "config": {
     "commitizen": {

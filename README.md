@@ -286,6 +286,10 @@ ejs
 
 区别于 vue、react 的客户端渲染
 
+<%= art%>: 对 art 进行编码，防止脚本攻击。
+<%- art%>: 不编码，原样显示，比如 art 是一个字符串
+`<div>test msg</div>`会被渲染出来，编码过后则是字符串，而不是 div
+
 ## 生成二维码
 
 二维码：承载了数据 -> 表现的就是一个字符串
@@ -364,5 +368,170 @@ Cache-Control: no-cache 表示的是，可以缓存，但是要用到文件的�
 4、任意一方主动断开，通道销毁
 
 ### 库: socket.io
+
 `https://socket.io/zh-CN/docs/v4/`
 `npm i socket.io`
+
+## CSRF
+
+Cross Site Request Forgery 跨站请求伪造
+
+原理：
+1、用户访问正常站点，获取到令牌，假设是 pc 端，保存在 cookie 中
+
+2、用户恶意访问站点，恶意站点通过某种形式去请求了正常站点（请求伪造），迫使正常用户把令牌传递到正常站点，完成攻击。
+（比如: 恶意站点搞了个 html，看起来是正常的，但是 html 里面有个 iframe，iframe 是另外的一个 html，这个 html 里面可能就有一个 img 标签，设置 src 就为正常网址请求路径，请求就会自己带上正常网站的 token，暗自被发送出去。）
+
+问题的根源：
+用户在跨越站点的请求中，他附带了 cookie，自动的附带（同源策略）
+
+### 防御
+
+用的多的打\*号
+
+#### SameSite\*
+
+浏览器支持的：cookie 的 SameSite，禁止跨域附带的 cookie。
+
+1、Strict: 严格，所有跨站都不带 cookie，甚至是超链接（点过去原先登录过的网站，又变不登录状态了）
+
+2、Lax：宽松，所有跨站超链接、GET 请求的表单、预加载连接时会发送的 cookie，其他时候不发
+
+3、None：不限制
+
+#### referer 和 Origin\*
+
+页面中的二次请求都会带 referer 或者 Origin 请求头，向服务器表明，该请求来自于哪一个页面，服务器根据其地址进行验证。
+
+缺陷：极少的情况，部分浏览器的 referer 会被用户禁用。
+
+#### authorization\*
+
+token 不放 cookie，丢请求头的 authorization 里。
+
+#### 验证码
+
+1、客户端请求服务器，请求添加学生的页面，传递 cookie。
+2、服务器
+2.1、生成一个随机数，丢到 session 中
+2.2、生成页面的时候，表单中加入一个隐藏的表单域`<input type="hidden" name="hash" value="<%=session['key'] %>"`
+3、填好信息后，提交表单，自动提交隐藏的随机数
+4、服务器
+4.1、先拿到 cookie，判断是否登陆过
+4.2、对比提交过来的随机数和之前的随机数是否一致
+4.3、清除掉 session 中的随机数
+（随机数只能用一次）
+
+假设： 恶意站点搞了个 html，看起来是正常的，但是 html 里面有个 iframe，iframe 是另外的一个 html，这个 html 里面有一个 form 表单，做 post：
+
+```html
+<form id="xxx" action="http://xxx" method="POST">
+  <input type="text" name="username" value="攻击者" />
+  <input type="text" name="sex" value="0" />
+</form>
+```
+
+这个 html 发送请求到 http://xxx，cookie 是会自动传过去，但是，form 里面的生成的随机数，他传过去
+就算他自己伪造了一个 input 也是，不知道随机数多少。
+
+#### 二次验证\*
+
+做出敏感操作就让用户二次验证。
+
+## XSS 攻击
+
+Cross Site Scripting 跨站脚本攻击
+
+CSRF 的话，还是需要用户去访问恶意网站，才会被攻击，而 XSS 就完全是网站安全性问题。
+
+### 存储型 XSS
+
+1、恶意用户恶意内容到服务器
+2、服务器没识别，保存恶意内容到数据库
+3、正常用户访问服务器，
+4、服务器在不知情的情况下，给予之前的恶意内容，用户被攻击。
+
+比如：发布文章，文章内容里面写 script 标签，内嵌脚本代码。ejs 模板内允许，没做编译时，会被攻击
+
+### 反射型 XSS
+
+1、恶意用户分享了一个正常网站的连接，但是连接中带有恶意的内容
+2、用户点击了该连接
+3、服务器在不知情的情况下，把恶意内容读取了出来，放进了页面中，让用户遭到攻击。
+
+比如：ejs 和 render，模板里面 a 标签的跳转，读取的访问路径里面的 query 中的某个属性
+=》 query 会放到 a 标签的 href 里，那么需要考虑编码问题，他可能会写`localhost:8000/users?redirect="><script>....</script>`
+或者 `localhost:8000/users?redirect=javascript:alert(1)` 这样的内容。
+
+### DOM 型
+
+有些 js 读取 dom 里的一些数据，去处理。但是他注入了错误的 dom。
+
+### 防御方法：
+
+`npm i xss`
+该库：处理利用 script 标签和超链接点击等，进行非法操作的代码，编译为字符串，其他正常的标签不影响他使用，可以配置过滤情况。
+
+模板引擎渲染的时候，全部使用`<%=redirect>`加等号，编译，不相信任何 dom。
+
+## 进程线程
+
+一个进程有独立的、可伸缩的内存空间，进程之间可以通信，CPU 在不同进程之间切换执行，两进程遵守一定的协议，比如 ipc。
+
+现在 node 支持线程模块，对进程操作基本没有使用，线程于进程中。
+一个进程一定有一个主线程，其下有 n 个子线程，内存空间不隔离，所以如果有公共的变量，需要互相的作用和影响。
+（nodejs 有自己的线程机制去尽力规避）
+
+### 什么时候使用线程？
+
+目的：充分使用多核 CPU，最优就是一个核一个线程，在大规模线程执行过程中，尽量不要阻塞（没有 io、只存在大量计算）
+
+比如：多个/大型文件的加密，加密算法需要大量计算
+
+线程最好，相互独立，不要使用共享数据。io 密集型不适合使用线程，适合异步
+
+```js
+const { Worker } = require("worker_threads");
+const os = require("os");
+const arr = require("./objArr.json"); // 数组文件
+const cpuNumber = os.cpus().length;
+const len = Math.ceil(arr.length / cpuNumber);
+
+console.time();
+let numbers = cpuNumber; // 目前的线程数量
+const newArr = []; // 保存的最终结果
+for (let i = 0; i < cpuNumber; i++) {
+  const data = arr.slice(i * len, (i + 1) * len);
+  const worker = new Worker("./worker.js", {
+    workerData: data,
+  }); // workder是子线程实例
+  worker.on("message", (result) => {
+    newArr.push(...result);
+    numbers--;
+    if (numbers === 0) {
+      console.timeEnd();
+      // 输出最终结果
+      console.log(newArr);
+    }
+    worker.terminate();
+  });
+}
+
+// worker.js文件
+const calcFn = require("./calcFn.js"); // 计算函数
+const {
+  parentPort, // 用于与父线程通信的端口
+  workerData, // 获取线程启动时传递的数据
+  threadId, // 获取线程的唯一编号
+} = require("worker_threads");
+const name = `线程${threadId}`;
+
+const newArr = [];
+for (const n of workerData) {
+  if (calcFn(n)) {
+    newArr.push(n);
+  }
+}
+console.log(`${name}处理完成,并把结果给予了主线程`);
+parentPort.postMessage(newArr);
+```

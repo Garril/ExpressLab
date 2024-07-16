@@ -84,6 +84,24 @@ app.use(
 // 解析 Content-type为application/json的情况
 app.use(express.json());
 
+// 处理xss
+const xss = require("xss");
+const myxss = new xss.FilterXSS({
+  onTagAttr(tag, name, value, isWhiteAttr) {
+    // 允许style属性
+    if (name === 'style') {
+      return `style="${value}"`;
+    }
+  }
+})
+app.use((req, res, next) => {
+  for (const key in req.body) {
+    const val = req.body[key];
+    req.body[key] = myxss.process(val);
+  }
+  next();
+})
+
 // 处理 api 的请求
 // app.use("/api/student", require("./api/student"));
 // app.use("/api/admin", require("./api/admin"));

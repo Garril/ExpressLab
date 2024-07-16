@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + Vue</title>
+  <script type="module" crossorigin src="/index-CpszayG0.js"></script>
+  <link rel="stylesheet" crossorigin href="/index-DxgWtsq2.css">
+</head>
+
+<body style="display: flex; flex-direction:column;justify-content: center;align-items: center;">
+  <!-- <img src="upload/Snipaste_2021-10-17_13-05-05-1720722341082.png" alt="" width="400px"> -->
+  <img src="http://localhost:8888/upload/Snipaste_2021-10-17_13-05-05-1720722341082.png" alt="" width="400px">
+  <!-- 相对路径，url引用都可以 -->
+  <div id="app"></div>
+  <img src="./api/captcha" alt="">
+
+  <button id="btn">发送数据到服务器</button>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+    integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+    crossorigin="anonymous"></script>
+  <script>
+    const socket = io();
+    document.querySelector('#btn').onclick = function () {
+      socket.emit("msg", "msg from client");
+    }
+    socket.on("test", chunk => {
+      console.log(chunk);
+    })
+  </script>
+</body>
+
+</html>
