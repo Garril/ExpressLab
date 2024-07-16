@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "97a6f98a-51af-451e-b5f3-db7277edfe9c",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17038943"
+	},
+	"item": [
+		{
+			"name": "add stu",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"测试人3\",\r\n    \"birthday\": \"2001-3-4\",\r\n    \"sex\": true,\r\n    \"mobile\": \"13311122233\",\r\n    \"ClassId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/student",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change stu",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"测试人111\",\r\n    \"birthday\": \"2001-3-4\",\r\n    \"sex\": false,\r\n    \"mobile\": \"12211125555\",\r\n    \"ClassId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/student/779",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"student",
+						"779"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete stu",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"测试人3\",\r\n    \"birthday\": \"2001-3-4\",\r\n    \"sex\": true,\r\n    \"mobile\": \"13311122233\",\r\n    \"ClassId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/student/709",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"student",
+						"709"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stu",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/student",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "captcha",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/student",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "proxy stu",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/proxy/api/student",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"proxy",
+						"api",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "template",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "baidu.com",
+					"host": [
+						"baidu",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/download/robot.jpg",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"download",
+						"robot.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "img",
+							"type": "file",
+							"src": "/D:/Picture/head/Snipaste_2021-12-05_23-22-56.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/upload",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mark",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "origin",
+							"type": "file",
+							"src": [
+								"/D:/Picture/head/Snipaste_2021-12-05_23-22-56.png",
+								"/D:/FrontEnd/ExpressLab/public/temp/bg.jpg"
+							]
+						},
+						{
+							"key": "water",
+							"type": "file",
+							"src": "/D:/FrontEnd/ExpressLab/public/temp/water.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/upload/mark",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"upload",
+						"mark"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "whoami",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpdiI6IjQzNTNmZWI0MWQ2OTg3YzU0ZDFkZWE3M2VjNDJiZjNkIiwiY29udGVudCI6IjMwYmZiMjg3ODVkMDkyYmZiYmM0YTIwM2NhNmJmODQwIn0sImlhdCI6MTcyMDQzNTU3NywiZXhwIjoxODA2ODM1NTc3fQ.H4N4irPnOVEL0_Jsb_qPqKJISboLkAI0G_bChlN3EO8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/admin/whoami",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"whoami"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stuById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "curmonth_sql_equal",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "PUID_sql_equal",
+							"value": "87971",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/student/779",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"student",
+						"779"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loginId\": \"admin\",\r\n    \"loginPwd\": \"1234568\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/admin/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
